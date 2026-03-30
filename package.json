@@ -2,6 +2,8 @@
   "name": "securevault",
   "private": true,
   "version": "1.0.0",
+  "description": "SecureVault: A high-security, localize secrets manager.",
+  "author": "SecureVault Security Team",
   "type": "commonjs",
   "main": "electron/main.js",
   "scripts": {
@@ -56,7 +58,8 @@
     "mac": {
       "target": [
         "zip"
-      ]
+      ],
+      "identity": null
     }
   }
 }
