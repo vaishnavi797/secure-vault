@@ -52,6 +52,11 @@
       ],
       "cscLink": null,
       "cscKeyPassword": null
+    },
+    "mac": {
+      "target": [
+        "zip"
+      ]
     }
   }
 }
