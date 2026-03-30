@@ -1,0 +1,47 @@
+name: Cross-Platform Security Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout Vault Source
+        uses: actions/checkout@v4
+
+      - name: Setup Node Security Engine
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Secure Dependencies
+        run: npm install
+
+      - name: Compile Security Payload
+        run: npm run build
+
+      - name: Upload Cryptographic Binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: SecureVault-${{ matrix.os }}
+          path: dist-electron/*.exe
+          if-no-files-found: ignore
+
+      - name: Upload Mac Security Binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: SecureVault-Mac
+          path: dist-electron/*.zip
+          if-no-files-found: ignore
