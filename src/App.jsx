@@ -41,13 +41,17 @@ const Dashboard = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat, i) => (
-                    <div key={i} className="card flex items-center gap-4 border border-slate-800 bg-slate-900/30">
+                    <div 
+                        key={i} 
+                        className={`card flex items-center gap-4 border border-slate-800 bg-slate-900/30 transition-all ${stat.label === 'Offline Mode' ? 'cursor-pointer hover:border-warning/50 hover:bg-warning/5' : ''}`}
+                        onClick={() => stat.label === 'Offline Mode' && window.electronAPI.lockVault()}
+                    >
                         <div className="p-3 rounded-xl bg-slate-900/50" style={{ color: stat.color }}>
                             <stat.icon size={24} />
                         </div>
                         <div>
                             <div className="text-2xl font-bold text-white">{stat.value}</div>
-                            <div className="text-sm text-gray-400">{stat.label}</div>
+                            <div className="text-sm text-gray-400 font-medium">{stat.label}</div>
                         </div>
                     </div>
                 ))}
@@ -388,7 +392,13 @@ const SettingsView = () => {
                              <div className="font-medium">Panic Key (Global)</div>
                              <div className="text-sm text-gray-500">Hide vault instantly using <kbd className="bg-slate-800 p-1 rounded font-mono text-indigo-400">Ctrl+Shift+L</kbd></div>
                          </div>
-                         <div className="status-badge">Active</div>
+                         <div 
+                            className="status-badge cursor-pointer hover:bg-indigo-500 hover:text-white transition-all active:scale-95 flex items-center gap-2 font-bold"
+                            onClick={() => window.electronAPI.lockVault()}
+                            title="Click to test Panic Lock"
+                         >
+                            <ShieldCheck size={14} /> Active
+                         </div>
                     </div>
                 </div>
 
